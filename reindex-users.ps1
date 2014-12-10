@@ -1,9 +1,8 @@
-param([Parameter(Mandatory=$true,ValueFromPipeline=$true)]$url, [Parameter(Mandatory=$true,ValueFromPipeline=$true)][string]$username, [Parameter(Mandatory=$true,ValueFromPipeline=$true)][string]$password, [ValidateSet('skip','on','off')][System.String]$enableAllManagedProperties="skip"  )
-# Re-index SPO tenant script, and enable ManagedProperties managed property
+param([Parameter(Mandatory=$true,ValueFromPipeline=$true)]$url, [Parameter(Mandatory=$true,ValueFromPipeline=$true)][string]$username, [Parameter(Mandatory=$true,ValueFromPipeline=$true)][string]$password)
+# Re-index SPO user profiles script
 # Author: Mikael Svenson - @mikaelsvenson
 # Blog: http://techmikael.blogspot.com
 
-# Modified by Eric Skaggs on 10/21/2014 - had trouble running this script as it was; functionality has not been changed
 
 function Reset-UserProfiles( $siteUrl )
 {
@@ -84,4 +83,9 @@ Add-Type -Path "$csomPath\Microsoft.SharePoint.Client.UserProfiles.dll"
 $securePassword = ConvertTo-SecureString $password -AsPlainText -Force 
 $credentials = New-Object Microsoft.SharePoint.Client.SharePointOnlineCredentials($username, $securePassword) 
 $spoCredentials = New-Object System.Management.Automation.PSCredential($username, $securePassword)
-Reset-UserProfiles -siteUrl $url
+if( $url.tolower() -notlike '*-admin*') {
+	Write-Host "This script has to be executed against the admin site of SPO. Eg. https://tenant-admin.sharepoint.com" -ForegroundColor Yellow
+	return;
+} else {
+	Reset-UserProfiles -siteUrl $url
+}

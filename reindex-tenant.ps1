@@ -103,7 +103,7 @@ function Set-AllManagedProperties( $web, $clientContext, $enableAllManagedProps 
 
 Import-Module Microsoft.Online.SharePoint.PowerShell
 # change to the path of your CSOM dlls and add their types
-$csomPath = "c:\Program Files\Common Files\microsoft shared\Web Server Extensions\16\ISAPI"
+$csomPath = "c:\Program Files\Common Files\microsoft shared\Web Server Extensions\15\ISAPI"
 Add-Type -Path "$csomPath\Microsoft.SharePoint.Client.dll" 
 Add-Type -Path "$csomPath\Microsoft.SharePoint.Client.Runtime.dll" 
 
