@@ -1,4 +1,4 @@
-param([Parameter(Mandatory=$true,ValueFromPipeline=$true)]$url, [string]$username, [string]$password, [ValidateSet('skip','on','off')][System.String]$enableAllManagedProperties="skip"  )
+param([Parameter(Mandatory=$true,ValueFromPipeline=$true)]$url, [Parameter(Mandatory=$true,ValueFromPipeline=$true)][string]$username, [Parameter(Mandatory=$true,ValueFromPipeline=$true)][string]$password, [ValidateSet('skip','on','off')][System.String]$enableAllManagedProperties="skip"  )
 # Re-index SPO tenant script, and enable ManagedProperties managed property
 # Author: Mikael Svenson - @mikaelsvenson
 # Blog: http://techmikael.blogspot.com
@@ -101,14 +101,14 @@ function Set-AllManagedProperties( $web, $clientContext, $enableAllManagedProps 
     }
 }
 
-#convert input password to a secure password 
-$securePassword = ConvertTo-SecureString $password -AsPlainText -Force 
-
+Import-Module Microsoft.Online.SharePoint.PowerShell
 # change to the path of your CSOM dlls and add their types
-$csomPath = "c:\Program Files\Common Files\microsoft shared\Web Server Extensions\15\ISAPI"
+$csomPath = "c:\Program Files\Common Files\microsoft shared\Web Server Extensions\16\ISAPI"
 Add-Type -Path "$csomPath\Microsoft.SharePoint.Client.dll" 
 Add-Type -Path "$csomPath\Microsoft.SharePoint.Client.Runtime.dll" 
 
+#convert input password to a secure password 
+$securePassword = ConvertTo-SecureString $password -AsPlainText -Force 
 $credentials = New-Object Microsoft.SharePoint.Client.SharePointOnlineCredentials($username, $securePassword) 
 $spoCredentials = New-Object System.Management.Automation.PSCredential($username, $securePassword)
 Connect-SPOService -Url $url -Credential $spoCredentials
