@@ -27,7 +27,7 @@ ManagedProperties property.
 More info: [How to trigger a full re-index in SharePoint On-line].
 
 ## Re-indexing of user profiles
-See ... for an explanation of user profile indexing
+See [How to trigger re-indexing of user profiles in SharePoint On-line] for an explanation of user profile indexing
 
 **Requires [CSOM package] from September 3rd 2014 or newer**
 
@@ -44,3 +44,4 @@ The script is executes like this:
 [CSOM package]:http://aka.ms/spocsom
 [@mikaelsvenson]:https://twitter.com/mikaelsvenson
 [http://techmikael.blogspot.com/2014/03/debugging-managed-properties-using.html]:http://techmikael.blogspot.com/2014/03/debugging-managed-properties-using.html
+[How to trigger re-indexing of user profiles in SharePoint On-line]:http://techmikael.blogspot.com/2014/12/how-to-trigger-re-indexing-of-user.html
