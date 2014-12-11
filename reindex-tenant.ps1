@@ -1,4 +1,4 @@
-param([Parameter(Mandatory=$true,ValueFromPipeline=$true)]$url, [Parameter(Mandatory=$true,ValueFromPipeline=$true)][string]$username, [Parameter(Mandatory=$true,ValueFromPipeline=$true)][string]$password, [ValidateSet('skip','on','off')][System.String]$enableAllManagedProperties="skip"  )
+param([Parameter(Mandatory=$true,ValueFromPipeline=$true)]$url, [Parameter(ValueFromPipeline=$true)][string]$username, [Parameter(ValueFromPipeline=$true)][string]$password, [ValidateSet('skip','on','off')][System.String]$enableAllManagedProperties="skip"  )
 # Re-index SPO tenant script, and enable ManagedProperties managed property
 # Author: Mikael Svenson - @mikaelsvenson
 # Blog: http://techmikael.blogspot.com
@@ -107,8 +107,16 @@ $csomPath = "c:\Program Files\Common Files\microsoft shared\Web Server Extension
 Add-Type -Path "$csomPath\Microsoft.SharePoint.Client.dll" 
 Add-Type -Path "$csomPath\Microsoft.SharePoint.Client.Runtime.dll" 
 
-#convert input password to a secure password 
-$securePassword = ConvertTo-SecureString $password -AsPlainText -Force 
+if([String]::IsNullOrWhiteSpace($username)) {
+	$username = Read-host "What's your username?"
+}
+
+if([String]::IsNullOrWhiteSpace($password)) {
+	$securePassword = Read-host "What's your password?" -AsSecureString 
+} else {
+	$securePassword = ConvertTo-SecureString $password -AsPlainText -Force 
+}
+
 $credentials = New-Object Microsoft.SharePoint.Client.SharePointOnlineCredentials($username, $securePassword) 
 $spoCredentials = New-Object System.Management.Automation.PSCredential($username, $securePassword)
 Connect-SPOService -Url $url -Credential $spoCredentials

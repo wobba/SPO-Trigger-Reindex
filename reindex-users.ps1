@@ -1,4 +1,4 @@
-param([Parameter(Mandatory=$true,ValueFromPipeline=$true)]$url, [Parameter(Mandatory=$true,ValueFromPipeline=$true)][string]$username, [Parameter(Mandatory=$true,ValueFromPipeline=$true)][string]$password)
+param([Parameter(Mandatory=$true,ValueFromPipeline=$true)]$url, [Parameter(ValueFromPipeline=$true)][string]$username, [Parameter(ValueFromPipeline=$true)][string]$password)
 # Re-index SPO user profiles script
 # Author: Mikael Svenson - @mikaelsvenson
 # Blog: http://techmikael.blogspot.com
@@ -79,8 +79,17 @@ Add-Type -Path "$csomPath\Microsoft.SharePoint.Client.Runtime.dll"
 Add-Type -Path "$csomPath\Microsoft.SharePoint.Client.Search.dll" 
 Add-Type -Path "$csomPath\Microsoft.SharePoint.Client.UserProfiles.dll" 
 
-#convert input password to a secure password 
-$securePassword = ConvertTo-SecureString $password -AsPlainText -Force 
+if([String]::IsNullOrWhiteSpace($username)) {
+	$username = Read-host "What's your username?"
+}
+
+if([String]::IsNullOrWhiteSpace($password)) {
+	$securePassword = Read-host "What's your password?" -AsSecureString 
+} else {
+	$securePassword = ConvertTo-SecureString $password -AsPlainText -Force 
+}
+
+
 $credentials = New-Object Microsoft.SharePoint.Client.SharePointOnlineCredentials($username, $securePassword) 
 $spoCredentials = New-Object System.Management.Automation.PSCredential($username, $securePassword)
 if( $url.tolower() -notlike '*-admin*') {
