@@ -30,6 +30,7 @@ More info: [How to trigger a full re-index in SharePoint On-line].
 See [How to trigger re-indexing of user profiles in SharePoint On-line] for an explanation of user profile indexing
 
 **Requires [CSOM package] from September 3rd 2014 or newer**
+
 **DO NOT run from a SharePoint Online Management Powershell. Use a regular Powershell to avoid CSOM DLL conflicts**
 
 This script will iterate all user profiles in SPO to force a trigger of re-indexing of the profiles on the next crawl.
