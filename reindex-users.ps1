@@ -6,7 +6,6 @@ param([Parameter(Mandatory=$true,ValueFromPipeline=$true)]$url, [Parameter(Value
 
 function Reset-UserProfiles( $siteUrl )
 {
-	#$clientContext = [mAdcOW.Hack.UPA]::GetContext($siteUrl)
 	$clientContext = New-Object Microsoft.SharePoint.Client.ClientContext($siteUrl)
 	$clientContext.Credentials = $credentials 
 	 
@@ -91,7 +90,6 @@ if([String]::IsNullOrWhiteSpace($password)) {
 
 
 $credentials = New-Object Microsoft.SharePoint.Client.SharePointOnlineCredentials($username, $securePassword) 
-$spoCredentials = New-Object System.Management.Automation.PSCredential($username, $securePassword)
 if( $url.tolower() -notlike '*-admin*') {
 	Write-Host "This script has to be executed against the admin site of SPO. Eg. https://tenant-admin.sharepoint.com" -ForegroundColor Yellow
 	return;
