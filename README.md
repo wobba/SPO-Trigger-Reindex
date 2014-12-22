@@ -42,6 +42,8 @@ The script is executes like this:
 
     .\reindex-users.ps1 -url https://techmikael-admin.sharepoint.com -username <yourusernameORprompt> -password <yourpwORprompt>
 
+You can also add the switch *-changeProperty* to choose if you want to use *SPS-Birthday* or *Department* (now default) as your change property.
+
 [How to trigger a full re-index in SharePoint On-line]:http://techmikael.blogspot.com/2014/02/how-to-trigger-full-re-index-in.html
 [CSOM package]:http://aka.ms/spocsom
 [@mikaelsvenson]:https://twitter.com/mikaelsvenson

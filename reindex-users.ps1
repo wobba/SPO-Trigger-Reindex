@@ -1,4 +1,4 @@
-param([Parameter(Mandatory=$true,ValueFromPipeline=$true)]$url, [Parameter(ValueFromPipeline=$true)][string]$username, [Parameter(ValueFromPipeline=$true)][string]$password)
+param([Parameter(Mandatory=$true,ValueFromPipeline=$true)]$url, [Parameter(ValueFromPipeline=$true)][string]$username, [Parameter(ValueFromPipeline=$true)][string]$password, [ValidateSet('SPS-Birthday','Department')][System.String]$changeProperty="Department" )
 # Re-index SPO user profiles script
 # Author: Mikael Svenson - @mikaelsvenson
 # Blog: http://techmikael.blogspot.com
@@ -41,27 +41,40 @@ function Reset-UserProfiles( $siteUrl )
 			{
 				Write-Host $dictionary["accountname"] "Saved:" $dictionary["write"] "Indexed:" $dictionary["crawltime"] -ForegroundColor Cyan
 				$pm = New-Object Microsoft.SharePoint.Client.UserProfiles.PeopleManager($clientContext)
-				$props = $pm.GetPropertiesFor($dictionary["accountname"]);
+				$props = $pm.GetPropertiesFor($dictionary["accountname"])
 				$clientContext.Load($props)
 				$clientContext.ExecuteQuery()
-					
-				$birthday = $props.UserProfileProperties["SPS-Birthday"]
-				if( $birthday -eq $null) {
-					Write-Host "`tSkipping as user doesn't have the SPS-Birthday field" -ForegroundColor Yellow
-					continue
+				
+				if( $changeProperty -eq "SPS-Birthday" ) {	
+					$birthday = $props.UserProfileProperties["SPS-Birthday"]
+					if( $birthday -eq $null) {
+						Write-Host "`tSkipping as user doesn't have the SPS-Birthday field" -ForegroundColor Yellow
+						continue
+					}
+
+					# Force save by setting a random birthday value
+					$pm.SetSingleValueProfileProperty($props.AccountName, "SPS-Birthday",  [DateTime]::Now.ToString("yyyyMMddHHmmss.0Z"))
+					$clientContext.ExecuteQuery()
+
+					if( $birthday -eq "" ) {
+						Write-Host "`tKeeping birthday as not defined" -ForegroundColor Green
+						$pm.SetSingleValueProfileProperty($props.AccountName, "SPS-Birthday",  [String]::Empty)
+					} else {
+						$oldDate = [DateTime]::Parse($birthday)
+						Write-Host "`tRe-setting birthday to" $oldDate -ForegroundColor Green	
+						$pm.SetSingleValueProfileProperty($props.AccountName, "SPS-Birthday",  $oldDate)
+					}
 				}
-
-				# Force save by setting a random birthday value
-				$pm.SetSingleValueProfileProperty($props.AccountName, "SPS-Birthday",  [DateTime]::Now.ToString("yyyyMMddHHmmss.0Z"));
-				$clientContext.ExecuteQuery()
-
-				if( $birthday -eq "" ) {
-					Write-Host "`tKeeping birthday as not defined" -ForegroundColor Green
-					$pm.SetSingleValueProfileProperty($props.AccountName, "SPS-Birthday",  [String]::Empty);
-				} else {
-					$oldDate = [DateTime]::Parse($birthday)
-					Write-Host "`tRe-setting birthday to" $oldDate -ForegroundColor Green	
-					$pm.SetSingleValueProfileProperty($props.AccountName, "SPS-Birthday",  $oldDate);
+				if( $changeProperty -eq "Department" ) {
+					$oldDepartment = $props.UserProfileProperties["Department"]
+					if( $oldDepartment -eq $null) {
+						Write-Host "`tSkipping as user doesn't have the Department field" -ForegroundColor Yellow
+						continue
+					}
+					$pm.SetSingleValueProfileProperty($props.AccountName, "Department",  "mAdcOW reindex placeholder")
+					$clientContext.ExecuteQuery()
+					Write-Host "`tRe-setting Department to" $oldDepartment -ForegroundColor Green
+					$pm.SetSingleValueProfileProperty($props.AccountName, "Department",  $oldDepartment)
 				}
 				$clientContext.ExecuteQuery()
 			}
