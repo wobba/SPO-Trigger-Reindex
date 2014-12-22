@@ -56,7 +56,7 @@ function Reset-UserProfiles( $siteUrl )
 				$clientContext.ExecuteQuery()
 
 				if( $birthday -eq "" ) {
-					Write-Host "`tRe-setting birthday to blank" -ForegroundColor Green
+					Write-Host "`tKeeping birthday as not defined" -ForegroundColor Green
 					$pm.SetSingleValueProfileProperty($props.AccountName, "SPS-Birthday",  [String]::Empty);
 				} else {
 					$oldDate = [DateTime]::Parse($birthday)
