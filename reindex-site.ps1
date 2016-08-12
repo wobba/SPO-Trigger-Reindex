@@ -43,9 +43,12 @@ function processWeb($web)
 	$web.Update()
 	$clientContext.ExecuteQuery()
 	
-	foreach ($subWeb in $subWebs)
-	{
-		processWeb($subWeb)
+	# No need to process subwebs if we only mark site collection for indexing
+	if($enableAllManagedProperties -ne "skip") {
+		foreach ($subWeb in $subWebs)
+		{
+			processWeb($subWeb)
+		}
 	}
 }
 
