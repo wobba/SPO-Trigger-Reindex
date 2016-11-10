@@ -1,14 +1,15 @@
 # SPO Trigger Re-index scripts by [@mikaelsvenson]
-- reindex-tenant.ps1 - Script to mark SharePoint online content to be picked up at the next crawl.
-
-- reindex-users.ps1 - Script to mark User Profiles to be picked up at the next crawl    
-
 ## Go the easy way with SharePoint Online Toolbox
 - Allows re-indexing of content
 - Allows re-indexing of user profiles much faster than the script (bulk update)
 - Gives you access to the SharePoint Online crawllog
 
 ### [Get it here!](https://store.office.com/en-us/sharepoint-online-search-toolbox-by-puzzlepart-WA104380514.aspx)
+
+## Scripts
+- reindex-tenant.ps1 - Script to mark SharePoint online content to be picked up at the next crawl.
+
+- reindex-users.ps1 - Script to mark User Profiles to be picked up at the next crawl    
 
 ## Re-indexing of SPO content
 This script which will iterate all site collections, sites and sub-sites on your tenant to force a trigger of re-indexing / full crawl of all items on the next crawl.
