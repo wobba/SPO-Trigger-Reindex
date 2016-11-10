@@ -104,6 +104,10 @@ function Set-AllManagedProperties( $web, $clientContext, $enableAllManagedProps 
     }
 }
 
+# promo
+Write-Host "Check your browser to get the store app" -ForegroundColor Yellow
+Start-Process -FilePath https://store.office.com/en-us/sharepoint-online-search-toolbox-by-puzzlepart-WA104380514.aspx
+
 # change to the path of your CSOM dlls and add their types
 $csomPath = "c:\Program Files\Common Files\microsoft shared\Web Server Extensions\16\ISAPI"
 Add-Type -Path "$csomPath\Microsoft.SharePoint.Client.dll" 
