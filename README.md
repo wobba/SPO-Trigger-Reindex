@@ -26,7 +26,7 @@ The script is executed like this:
 
 > Be sure to check that **$csomPath** is pointing to the right folder for your CSOM library install
 
-You may also add the -enableAllManagedProperties parameter which by default is set to $false. This is used in conjenction with the feature mentioned above with the
+You may also add the -enableAllManagedProperties parameter which by default is set to $false. This is used in conjunction with the feature mentioned above with the
 ManagedProperties property.
 
 > For an explanation of the ManagedProperties property read [http://techmikael.blogspot.com/2014/03/debugging-managed-properties-using.html]
