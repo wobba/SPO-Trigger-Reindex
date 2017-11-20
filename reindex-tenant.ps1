@@ -54,8 +54,8 @@ function processWeb($web)
 
 function Set-AllManagedProperties( $web, $clientContext, $enableAllManagedProps )
 {
-	$lists = $web.Lists
-	$clientContext.Load($lists)
+    $lists = $web.Lists
+    $clientContext.Load($lists)
     $clientContext.ExecuteQuery()
  
     foreach ($list in $lists)
@@ -127,4 +127,4 @@ if([String]::IsNullOrWhiteSpace($password)) {
 $credentials = New-Object Microsoft.SharePoint.Client.SharePointOnlineCredentials($username, $securePassword) 
 $spoCredentials = New-Object System.Management.Automation.PSCredential($username, $securePassword)
 Connect-SPOService -Url $url -Credential $spoCredentials
-Get-SPOSite | foreach {Reset-Webs -siteUrl $_.Url }
+Get-SPOSite -Limit ALL | foreach {Reset-Webs -siteUrl $_.Url }
