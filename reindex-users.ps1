@@ -7,12 +7,12 @@ param([Parameter(Mandatory=$true,ValueFromPipeline=$true)]$url, [Parameter(Value
 function Reset-UserProfiles( $siteUrl )
 {
 	$clientContext = New-Object Microsoft.SharePoint.Client.ClientContext($siteUrl)
-	$clientContext.Credentials = $credentials 
-	 
-	if (!$clientContext.ServerObjectIsNull.Value) 
-	{ 
-		Write-Host "Connected to SharePoint Online site: '$siteUrl'" -ForegroundColor Green 
-	} 
+	$clientContext.Credentials = $credentials
+
+	if (!$clientContext.ServerObjectIsNull.Value)
+	{
+		Write-Host "Connected to SharePoint Online site: '$siteUrl'" -ForegroundColor Green
+	}
 	$start = 0
 	$rowLimit = 100
 	do
@@ -21,7 +21,7 @@ function Reset-UserProfiles( $siteUrl )
 		$query.QueryText="*"
 		$query.SourceId= [Guid]"b09a7990-05ea-4af9-81ef-edfab16c4e31"
 		$query.StartRow=$start
-		$query.RowLimit=$rowLimit 
+		$query.RowLimit=$rowLimit
 		$query.SelectProperties.Add("accountname")
 		$query.SelectProperties.Add("write")
 		$query.SelectProperties.Add("crawltime")
@@ -33,7 +33,7 @@ function Reset-UserProfiles( $siteUrl )
 
 		$currentCount = 0
 		if ($result.Value -ne $null)
-		{			
+		{
 			$currentCount = $result.Value.ResultRows.Length
 			Write-Host "Iterating $currentCount profiles" -ForegroundColor Green
 			$start = ($start + $rowLimit)
@@ -44,8 +44,8 @@ function Reset-UserProfiles( $siteUrl )
 				$props = $pm.GetPropertiesFor($dictionary["accountname"])
 				$clientContext.Load($props)
 				$clientContext.ExecuteQuery()
-				
-				if( $changeProperty -eq "SPS-Birthday" ) {	
+
+				if( $changeProperty -eq "SPS-Birthday" ) {
 					$birthday = $props.UserProfileProperties["SPS-Birthday"]
 					if( $birthday -eq $null) {
 						Write-Host "`tSkipping as user doesn't have the SPS-Birthday field" -ForegroundColor Yellow
@@ -61,7 +61,7 @@ function Reset-UserProfiles( $siteUrl )
 						$pm.SetSingleValueProfileProperty($props.AccountName, "SPS-Birthday",  [String]::Empty)
 					} else {
 						$oldDate = [DateTime]::Parse($birthday)
-						Write-Host "`tRe-setting birthday to" $oldDate -ForegroundColor Green	
+						Write-Host "`tRe-setting birthday to" $oldDate -ForegroundColor Green
 						$pm.SetSingleValueProfileProperty($props.AccountName, "SPS-Birthday",  $oldDate)
 					}
 				}
@@ -80,32 +80,32 @@ function Reset-UserProfiles( $siteUrl )
 			}
 		}
 	}
-	while ($currentCount -eq $rowLimit)	
+	while ($currentCount -eq $rowLimit)
 }
 
 # promo
 Write-Host "Check your browser to get the store app" -ForegroundColor Yellow
-Start-Process -FilePath https://store.office.com/en-us/sharepoint-online-search-toolbox-by-puzzlepart-WA104380514.aspx
+Start-Process -FilePath "https://appsource.microsoft.com/en-us/product/office/WA104192565"
 
 # change to the path of your CSOM dlls and add their types
 $csomPath = "c:\Program Files\Common Files\microsoft shared\Web Server Extensions\16\ISAPI"
-Add-Type -Path "$csomPath\Microsoft.SharePoint.Client.dll" 
-Add-Type -Path "$csomPath\Microsoft.SharePoint.Client.Runtime.dll" 
-Add-Type -Path "$csomPath\Microsoft.SharePoint.Client.Search.dll" 
-Add-Type -Path "$csomPath\Microsoft.SharePoint.Client.UserProfiles.dll" 
+Add-Type -Path "$csomPath\Microsoft.SharePoint.Client.dll"
+Add-Type -Path "$csomPath\Microsoft.SharePoint.Client.Runtime.dll"
+Add-Type -Path "$csomPath\Microsoft.SharePoint.Client.Search.dll"
+Add-Type -Path "$csomPath\Microsoft.SharePoint.Client.UserProfiles.dll"
 
 if([String]::IsNullOrWhiteSpace($username)) {
 	$username = Read-host "What's your username?"
 }
 
 if([String]::IsNullOrWhiteSpace($password)) {
-	$securePassword = Read-host "What's your password?" -AsSecureString 
+	$securePassword = Read-host "What's your password?" -AsSecureString
 } else {
-	$securePassword = ConvertTo-SecureString $password -AsPlainText -Force 
+	$securePassword = ConvertTo-SecureString $password -AsPlainText -Force
 }
 
 
-$credentials = New-Object Microsoft.SharePoint.Client.SharePointOnlineCredentials($username, $securePassword) 
+$credentials = New-Object Microsoft.SharePoint.Client.SharePointOnlineCredentials($username, $securePassword)
 if( $url.tolower() -notlike '*-admin*') {
 	Write-Host "This script has to be executed against the admin site of SPO. Eg. https://tenant-admin.sharepoint.com" -ForegroundColor Yellow
 	return;
