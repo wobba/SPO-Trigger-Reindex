@@ -83,10 +83,6 @@ function Reset-UserProfiles( $siteUrl )
 	while ($currentCount -eq $rowLimit)
 }
 
-# promo
-Write-Host "Check your browser to get the store app" -ForegroundColor Yellow
-Start-Process -FilePath "https://appsource.microsoft.com/en-us/product/office/WA104192565"
-
 # change to the path of your CSOM dlls and add their types
 $csomPath = "c:\Program Files\Common Files\microsoft shared\Web Server Extensions\16\ISAPI"
 Add-Type -Path "$csomPath\Microsoft.SharePoint.Client.dll"
