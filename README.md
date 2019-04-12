@@ -1,11 +1,4 @@
 # SPO Trigger Re-index scripts by [@mikaelsvenson]
-## Go the easy way with SharePoint Online Toolbox
-- Allows re-indexing of content - with support for Group sites and Delve blogs
-- Allows re-indexing of user profiles much faster than the script (bulk update)
-- Gives you access to the SharePoint Online crawllog
-
-### [Get it here!](https://store.office.com/en-us/sharepoint-online-search-toolbox-by-puzzlepart-WA104380514.aspx)
-
 ## Scripts
 - reindex-tenant.ps1 - Script to mark SharePoint online content to be picked up at the next crawl.
 
