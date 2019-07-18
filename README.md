@@ -2,28 +2,6 @@
 ## Scripts
 - reindex-tenant.ps1 - Script to mark SharePoint online content to be picked up at the next crawl.
 
-- reindex-users.ps1 - Script to mark User Profiles to be picked up at the next crawl    
-
-## Re-indexing of SPO content
-This script which will iterate all site collections, sites and sub-sites on your tenant to force a trigger of re-indexing / full crawl of all items on the next crawl.
-
-In SharePoint Online you cannot force a full crawl via the admin user interface and thus have to iterate all sites and set a property in the property bag to accomplish the same task.
-
-This is needed for several search schema modifications, for example when you map crawled properties to managed properties.
-
-The script also has a function to enable population of the ManagedProperties managed property for use with the SharePoint 2013 Search Query Tool v2.
-
-The script is executed like this:
-
-    .\reindex-tenant.ps1 -url https://tenant-admin.sharepoint.com
-
-You may also add the -enableAllManagedProperties parameter which by default is set to $false. This is used in conjunction with the feature mentioned above with the
-ManagedProperties property.
-
-> For an explanation of the ManagedProperties property read [http://techmikael.blogspot.com/2014/03/debugging-managed-properties-using.html]
-
-More info: [How to trigger a full re-index in SharePoint On-line].
-
 ## Re-indexing of user profiles
 See [How to trigger re-indexing of user profiles in SharePoint On-line] for an explanation of user profile indexing
 
@@ -35,10 +13,7 @@ at approximately a **4 hour interval** (per December 10th 2014). I have seen as 
 The script is executes like this:
 
     .\reindex-users.ps1 -url https://techmikael-admin.sharepoint.com
-
+0
 You can also add the switch *-changeProperty* to choose if you want to use *SPS-Birthday* or *Department* (now default) as your change property.
 
-[How to trigger a full re-index in SharePoint On-line]:http://techmikael.blogspot.com/2014/02/how-to-trigger-full-re-index-in.html
-[@mikaelsvenson]:https://twitter.com/mikaelsvenson
-[http://techmikael.blogspot.com/2014/03/debugging-managed-properties-using.html]:http://techmikael.blogspot.com/2014/03/debugging-managed-properties-using.html
 [How to trigger re-indexing of user profiles in SharePoint On-line]:http://techmikael.blogspot.com/2014/12/how-to-trigger-re-indexing-of-user.html
