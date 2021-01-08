@@ -63,5 +63,5 @@ if ( $url.tolower() -notlike '*-admin*') {
     Write-Host "This script has to be executed against the admin site of SPO. Eg. https://tenant-admin.sharepoint.com" -ForegroundColor Yellow
     return
 }
-Connect-PnPOnline -Url $url -SPOManagementShell -SkipTenantAdminCheck
+Connect-PnPOnline -Url $url -SkipTenantAdminCheck -UseWebLogin
 Reset-UserProfiles -siteUrl $url
