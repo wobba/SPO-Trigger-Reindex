@@ -1,7 +1,7 @@
 # SPO Trigger Re-index scripts by [@mikaelsvenson]
 ## Scripts
-- reindex-tenant.ps1 - Script to mark SharePoint online content to be picked up at the next crawl.
-- reindex-tenant-v2.ps1 - More efficient script to mark SharePoint online content to be picked up at the next crawl.
+- reindex-users.ps1 - Script to mark SharePoint user profiles to be picked up at the next crawl.
+- reindex-users-v2.ps1 - More efficient script to mark SharePoint online content to be picked up at the next crawl.
 
 ## Re-indexing of user profiles
 See [How to trigger re-indexing of user profiles in SharePoint On-line] for an explanation of user profile indexing
