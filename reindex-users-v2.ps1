@@ -62,7 +62,7 @@ $profiles |% {
 
 }
 Write-Output "Found $($accountFragments.Count) profiles"
-$json = "{""value"":[" + ($accountFragment -join ',') + "]}"
+$json = "{""value"":[" + ($accountFragments -join ',') + "]}"
 
 $propertyMap = @{}
 $propertyMap.Add("Department", "Department")
