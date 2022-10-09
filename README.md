@@ -4,6 +4,12 @@
 - reindex-users-v2.ps1 - More efficient script to mark SharePoint online content to be picked up at the next crawl.
 
 ## Re-indexing of user profiles
+[Todd Klindt](https://twitter.com/ToddKlindt) created an updated PowerShell function based on the script which is worth taking a look at.
+
+**https://pnp.github.io/script-samples/spo-request-pnp-reindex-user-profile/README.html**
+
+<hr>
+
 See [How to trigger re-indexing of user profiles in SharePoint On-line] for an explanation of user profile indexing
 
 The v1 script will iterate all user profiles in SPO to force a trigger of re-indexing of the profiles on the next crawl.

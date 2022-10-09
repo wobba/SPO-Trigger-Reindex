@@ -34,6 +34,8 @@ param(
     [Parameter(Mandatory = $false, ValueFromPipeline = $true)][string]$tempPath = $PSScriptRoot
 )
 
+Write-Output "An updates version exists at https://pnp.github.io/script-samples/spo-request-pnp-reindex-user-profile/README.html which is worth taking a look at."
+
 $hasPnP = (Get-Module PnP.PowerShell -ListAvailable).Length
 if ($hasPnP -eq 0) {
     Write-Output "This script requires PnP PowerShell, trying to install"
